@@ -6,9 +6,15 @@
 #include "visualization_msgs/Marker.h"
 #include <ros/ros.h>
 
+// NOTE
+#include "mavros_msgs/PositionTarget.h"
+
 ros::Publisher pos_cmd_pub;
+ros::Publisher raw_cmd_pub;
 
 quadrotor_msgs::PositionCommand cmd;
+mavros_msgs::PositionTarget raw_cmd;
+
 double pos_gain[3] = {0, 0, 0};
 double vel_gain[3] = {0, 0, 0};
 
@@ -53,7 +59,7 @@ void bsplineCallback(traj_utils::BsplineConstPtr msg)
   //   yaw_pts(i, 0) = msg->yaw_pts[i];
   // }
 
-  //UniformBspline yaw_traj(yaw_pts, msg->order, msg->yaw_dt);
+  // UniformBspline yaw_traj(yaw_pts, msg->order, msg->yaw_dt);
 
   start_time_ = msg->start_time;
   traj_id_ = msg->traj_id;
@@ -227,6 +233,20 @@ void cmdCallback(const ros::TimerEvent &e)
   last_yaw_ = cmd.yaw;
 
   pos_cmd_pub.publish(cmd);
+
+  // NOTE: another msg sent to cmd_node to mavros
+  raw_cmd.coordinate_frame = mavros_msgs::PositionTarget::FRAME_LOCAL_NED;
+  raw_cmd.type_mask = mavros_msgs::PositionTarget::IGNORE_AFX |
+                      mavros_msgs::PositionTarget::IGNORE_AFY |
+                      mavros_msgs::PositionTarget::IGNORE_AFZ;
+
+  raw_cmd.position = cmd.position;
+  raw_cmd.velocity = cmd.velocity;
+  raw_cmd.acceleration_or_force = cmd.acceleration;
+  raw_cmd.yaw = cmd.yaw;
+  raw_cmd.yaw_rate = cmd.yaw_dot;
+
+  raw_cmd_pub.publish(raw_cmd);
 }
 
 int main(int argc, char **argv)
@@ -237,7 +257,9 @@ int main(int argc, char **argv)
 
   ros::Subscriber bspline_sub = nh.subscribe("planning/bspline", 10, bsplineCallback);
 
+  // NOTE
   pos_cmd_pub = nh.advertise<quadrotor_msgs::PositionCommand>("/position_cmd", 50);
+  raw_cmd_pub = nh.advertise<mavros_msgs::PositionTarget>("/raw_cmd", 50);
 
   ros::Timer cmd_timer = nh.createTimer(ros::Duration(0.01), cmdCallback);
 

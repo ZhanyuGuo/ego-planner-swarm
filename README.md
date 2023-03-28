@@ -4,6 +4,9 @@ You can just execute the following commands one by one.
 ```
 sudo apt-get install libarmadillo-dev
 git clone https://github.com/ZJU-FAST-Lab/ego-planner-swarm.git
+```
+refer to issue [#9](https://github.com/ZJU-FAST-Lab/ego-planner-swarm/issues/9)
+```
 cd ego-planner-swarm
 catkin_make -j1
 source devel/setup.bash
