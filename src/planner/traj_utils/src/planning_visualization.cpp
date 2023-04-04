@@ -7,7 +7,6 @@ namespace ego_planner
   PlanningVisualization::PlanningVisualization(ros::NodeHandle &nh)
   {
     node = nh;
-
     goal_point_pub = nh.advertise<visualization_msgs::Marker>("goal_point", 2);
     global_list_pub = nh.advertise<visualization_msgs::Marker>("global_list", 2);
     init_list_pub = nh.advertise<visualization_msgs::Marker>("init_list", 2);
@@ -15,7 +14,7 @@ namespace ego_planner
     a_star_list_pub = nh.advertise<visualization_msgs::Marker>("a_star_list", 20);
   }
 
-  // // real ids used: {id, id+1000}
+  // real ids used: {id, id+1000}
   void PlanningVisualization::displayMarkerList(ros::Publisher &pub, const vector<Eigen::Vector3d> &list, double scale,
                                                 Eigen::Vector4d color, int id, bool show_sphere /* = true */)
   {

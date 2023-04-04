@@ -45,20 +45,19 @@ namespace ego_planner
     double getSwarmClearance(void) { return bspline_optimizer_->getSwarmClearance(); }
 
     bool checkCollision(int drone_id);
-    
 
     PlanParameters pp_;
     LocalTrajData local_data_;
     GlobalTrajData global_data_;
     GridMap::Ptr grid_map_;
-    fast_planner::ObjPredictor::Ptr obj_predictor_;    
+    fast_planner::ObjPredictor::Ptr obj_predictor_;
     SwarmTrajData swarm_trajs_buf_;
 
   private:
     /* main planning algorithms & modules */
     PlanningVisualization::Ptr visualization_;
 
-    // ros::Publisher obj_pub_; //zx-todo 
+    // ros::Publisher obj_pub_; //zx-todo
 
     BsplineOptimizer::Ptr bspline_optimizer_;
 
