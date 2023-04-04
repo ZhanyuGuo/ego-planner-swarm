@@ -41,11 +41,9 @@
 
   <arg name="drone_id"/>
 
-
   <!-- main node -->
   <!-- <node pkg="ego_planner" name="ego_planner_node" type="ego_planner_node" output="screen" launch-prefix="valgrind"> -->
   <node pkg="ego_planner" name="drone_$(arg drone_id)_ego_planner_node" type="ego_planner_node" output="screen">
-  
     <remap from="~odom_world" to="/drone_$(arg drone_id)_$(arg odometry_topic)"/>
     <remap from="~planning/bspline" to = "/drone_$(arg drone_id)_planning/bspline"/>
     <remap from="~planning/data_display" to = "/drone_$(arg drone_id)_planning/data_display"/>
@@ -54,15 +52,15 @@
 
     <remap from="~grid_map/odom" to="/drone_$(arg drone_id)_$(arg odometry_topic)"/>
     <remap from="~grid_map/cloud" to="/drone_$(arg drone_id)_$(arg cloud_topic)"/>
-    <remap from="~grid_map/pose"   to = "/drone_$(arg drone_id)_$(arg camera_pose_topic)"/> 
+    <remap from="~grid_map/pose"   to = "/drone_$(arg drone_id)_$(arg camera_pose_topic)"/>
     <remap from="~grid_map/depth" to = "/drone_$(arg drone_id)_$(arg depth_topic)"/>
-    
 
     <!-- planning fsm -->
     <param name="fsm/flight_type" value="$(arg flight_type)" type="int"/>
     <param name="fsm/thresh_replan_time" value="1.0" type="double"/>
     <param name="fsm/thresh_no_replan_meter" value="1.0" type="double"/>
-    <param name="fsm/planning_horizon" value="$(arg planning_horizon)" type="double"/> <!--always set to 1.5 times grater than sensing horizen-->
+    <param name="fsm/planning_horizon" value="$(arg planning_horizon)" type="double"/>
+    <!--always set to 1.5 times grater than sensing horizen-->
     <param name="fsm/planning_horizen_time" value="3" type="double"/>
     <param name="fsm/emergency_time" value="1.0" type="double"/>
     <param name="fsm/realworld_experiment" value="false"/>
@@ -85,16 +83,16 @@
     <param name="fsm/waypoint4_y" value="$(arg point4_y)" type="double"/>
     <param name="fsm/waypoint4_z" value="$(arg point4_z)" type="double"/>
 
-    <param name="grid_map/resolution"      value="0.1" /> 
-    <param name="grid_map/map_size_x"   value="$(arg map_size_x_)" /> 
-    <param name="grid_map/map_size_y"   value="$(arg map_size_y_)" /> 
-    <param name="grid_map/map_size_z"   value="$(arg map_size_z_)" /> 
-    <param name="grid_map/local_update_range_x"  value="5.5" /> 
-    <param name="grid_map/local_update_range_y"  value="5.5" /> 
-    <param name="grid_map/local_update_range_z"  value="4.5" /> 
-    <param name="grid_map/obstacles_inflation"     value="0.099" /> 
+    <param name="grid_map/resolution" value="0.1" />
+    <param name="grid_map/map_size_x" value="$(arg map_size_x_)" />
+    <param name="grid_map/map_size_y" value="$(arg map_size_y_)" />
+    <param name="grid_map/map_size_z" value="$(arg map_size_z_)" />
+    <param name="grid_map/local_update_range_x" value="5.5" />
+    <param name="grid_map/local_update_range_y" value="5.5" />
+    <param name="grid_map/local_update_range_z" value="4.5" />
+    <param name="grid_map/obstacles_inflation" value="0.099" />
     <param name="grid_map/local_map_margin" value="10"/>
-    <param name="grid_map/ground_height"        value="-0.01"/>
+    <param name="grid_map/ground_height" value="-0.01"/>
     <!-- camera parameter -->
     <param name="grid_map/cx" value="$(arg cx)"/>
     <param name="grid_map/cy" value="$(arg cy)"/>
@@ -103,27 +101,27 @@
     <!-- depth filter -->
     <param name="grid_map/use_depth_filter" value="true"/>
     <param name="grid_map/depth_filter_tolerance" value="0.15"/>
-    <param name="grid_map/depth_filter_maxdist"   value="5.0"/>
-    <param name="grid_map/depth_filter_mindist"   value="0.2"/>
-    <param name="grid_map/depth_filter_margin"    value="2"/>
+    <param name="grid_map/depth_filter_maxdist" value="5.0"/>
+    <param name="grid_map/depth_filter_mindist" value="0.2"/>
+    <param name="grid_map/depth_filter_margin" value="2"/>
     <param name="grid_map/k_depth_scaling_factor" value="1000.0"/>
     <param name="grid_map/skip_pixel" value="2"/>
     <!-- local fusion -->
-    <param name="grid_map/p_hit"  value="0.65"/>
+    <param name="grid_map/p_hit" value="0.65"/>
     <param name="grid_map/p_miss" value="0.35"/>
-    <param name="grid_map/p_min"  value="0.12"/>
-    <param name="grid_map/p_max"  value="0.90"/>
-    <param name="grid_map/p_occ"  value="0.80"/>
+    <param name="grid_map/p_min" value="0.12"/>
+    <param name="grid_map/p_max" value="0.90"/>
+    <param name="grid_map/p_occ" value="0.80"/>
     <param name="grid_map/min_ray_length" value="0.1"/>
     <param name="grid_map/max_ray_length" value="4.5"/>
 
-    <param name="grid_map/virtual_ceil_height"   value="2.9"/>
-    <param name="grid_map/visualization_truncate_height"   value="1.8"/>
-    <param name="grid_map/show_occ_time"  value="false"/>
-    <param name="grid_map/pose_type"     value="1"/>  
-    <param name="grid_map/frame_id"      value="world"/>
+    <param name="grid_map/virtual_ceil_height" value="2.9"/>
+    <param name="grid_map/visualization_truncate_height" value="1.8"/>
+    <param name="grid_map/show_occ_time" value="false"/>
+    <param name="grid_map/pose_type" value="1"/>
+    <param name="grid_map/frame_id" value="world"/>
 
-  <!-- planner manager -->
+    <!-- planner manager -->
     <param name="manager/max_vel" value="$(arg max_vel)" type="double"/>
     <param name="manager/max_acc" value="$(arg max_acc)" type="double"/>
     <param name="manager/max_jerk" value="4" type="double"/>
@@ -133,7 +131,7 @@
     <param name="manager/use_distinctive_trajs" value="$(arg use_distinctive_trajs)" type="bool"/>
     <param name="manager/drone_id" value="$(arg drone_id)"/>
 
-  <!-- trajectory optimization -->
+    <!-- trajectory optimization -->
     <param name="optimization/lambda_smooth" value="1.0" type="double"/>
     <param name="optimization/lambda_collision" value="0.5" type="double"/>
     <param name="optimization/lambda_feasibility" value="0.1" type="double"/>
@@ -147,14 +145,10 @@
     <param name="bspline/limit_acc" value="$(arg max_acc)" type="double"/>
     <param name="bspline/limit_ratio" value="1.1" type="double"/>
 
-  <!-- objects prediction -->
+    <!-- objects prediction -->
     <param name="prediction/obj_num" value="$(arg obj_num_set)" type="int"/>
     <param name="prediction/lambda" value="1.0" type="double"/>
     <param name="prediction/predict_rate" value="1.0" type="double"/>
-  
-  
-
-
   </node>
 
 </launch>

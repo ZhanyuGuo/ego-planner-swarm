@@ -3,9 +3,9 @@
 
 #include <Eigen/Eigen>
 #include <algorithm>
-//#include <bspline_opt/uniform_bspline.h>
+// #include <bspline_opt/uniform_bspline.h>
 #include <iostream>
-//#include <bspline_opt/polynomial_traj.h>
+// #include <bspline_opt/polynomial_traj.h>
 #include <ros/ros.h>
 #include <vector>
 #include <visualization_msgs/Marker.h>
@@ -36,7 +36,7 @@ namespace ego_planner
     typedef std::shared_ptr<PlanningVisualization> Ptr;
 
     void displayMarkerList(ros::Publisher &pub, const vector<Eigen::Vector3d> &list, double scale,
-                           Eigen::Vector4d color, int id,  bool show_sphere = true);
+                           Eigen::Vector4d color, int id, bool show_sphere = true);
     void generatePathDisplayArray(visualization_msgs::MarkerArray &array,
                                   const vector<Eigen::Vector3d> &list, double scale, Eigen::Vector4d color, int id);
     void generateArrowDisplayArray(visualization_msgs::MarkerArray &array,

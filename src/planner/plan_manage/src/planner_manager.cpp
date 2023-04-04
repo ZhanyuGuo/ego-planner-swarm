@@ -272,7 +272,7 @@ namespace ego_planner
     {
       flag_step_1_success = bspline_optimizer_->BsplineOptimizeTrajRebound(ctrl_pts, ts);
       t_opt = ros::Time::now() - t_start;
-      //static int vis_id = 0;
+      // static int vis_id = 0;
       visualization_->displayInitPathList(point_set, 0.2, 0);
     }
 

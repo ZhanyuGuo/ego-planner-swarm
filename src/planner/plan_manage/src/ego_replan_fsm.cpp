@@ -234,7 +234,7 @@ namespace ego_planner
     odom_vel_(1) = msg->twist.twist.linear.y;
     odom_vel_(2) = msg->twist.twist.linear.z;
 
-    //odom_acc_ = estimateAcc( msg );
+    // odom_acc_ = estimateAcc( msg );
 
     odom_orient_.w() = msg->pose.pose.orientation.w;
     odom_orient_.x() = msg->pose.pose.orientation.x;
@@ -617,7 +617,7 @@ namespace ego_planner
     exec_timer_.start();
   }
 
-  bool EGOReplanFSM::planFromGlobalTraj(const int trial_times /*=1*/) //zx-todo
+  bool EGOReplanFSM::planFromGlobalTraj(const int trial_times /*=1*/) // zx-todo
   {
     start_pt_ = odom_pos_;
     start_vel_ = odom_vel_;
@@ -646,7 +646,7 @@ namespace ego_planner
     ros::Time time_now = ros::Time::now();
     double t_cur = (time_now - info->start_time_).toSec();
 
-    //cout << "info->velocity_traj_=" << info->velocity_traj_.get_control_points() << endl;
+    // cout << "info->velocity_traj_=" << info->velocity_traj_.get_control_points() << endl;
 
     start_pt_ = info->position_traj_.evaluateDeBoorT(t_cur);
     start_vel_ = info->velocity_traj_.evaluateDeBoorT(t_cur);
@@ -657,7 +657,7 @@ namespace ego_planner
     if (!success)
     {
       success = callReboundReplan(true, false);
-      //changeFSMExecState(EXEC_TRAJ, "FSM");
+      // changeFSMExecState(EXEC_TRAJ, "FSM");
       if (!success)
       {
         for (int i = 0; i < trial_times; i++)
@@ -744,7 +744,7 @@ namespace ego_planner
           }
           else
           {
-            //ROS_WARN("current traj in collision, replan.");
+            // ROS_WARN("current traj in collision, replan.");
             changeFSMExecState(REPLAN_TRAJ, "SAFETY");
           }
           return;
