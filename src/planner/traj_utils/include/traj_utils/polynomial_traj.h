@@ -9,10 +9,10 @@ using std::vector;
 class PolynomialTraj
 {
 private:
-  vector<double> times;       // time of each segment
-  vector<vector<double>> cxs; // coefficient of x of each segment, from n-1 -> 0
-  vector<vector<double>> cys; // coefficient of y of each segment
-  vector<vector<double>> czs; // coefficient of z of each segment
+  vector<double> times;        // time of each segment
+  vector<vector<double>> cxs;  // coefficient of x of each segment, from n-1 -> 0
+  vector<vector<double>> cys;  // coefficient of y of each segment
+  vector<vector<double>> czs;  // coefficient of z of each segment
 
   double time_sum;
   int num_seg;
@@ -59,14 +59,14 @@ public:
   {
     switch (axis)
     {
-    case 0:
-      return cxs;
-    case 1:
-      return cys;
-    case 2:
-      return czs;
-    default:
-      std::cout << "\033[31mIllegal axis!\033[0m" << std::endl;
+      case 0:
+        return cxs;
+      case 1:
+        return cys;
+      case 2:
+        return czs;
+      default:
+        std::cout << "\033[31mIllegal axis!\033[0m" << std::endl;
     }
 
     vector<vector<double>> empty;
@@ -234,8 +234,7 @@ public:
       for (double i = 3; i < order; i += 1)
         for (double j = 3; j < order; j += 1)
         {
-          mat_jerk(i, j) =
-              i * (i - 1) * (i - 2) * j * (j - 1) * (j - 2) * pow(ts, i + j - 5) / (i + j - 5);
+          mat_jerk(i, j) = i * (i - 1) * (i - 2) * j * (j - 1) * (j - 2) * pow(ts, i + j - 5) / (i + j - 5);
         }
 
       jerk += (cxv.transpose() * mat_jerk * cxv)(0, 0);
@@ -246,7 +245,7 @@ public:
     return jerk;
   }
 
-  void getMeanAndMaxVel(double &mean_v, double &max_v)
+  void getMeanAndMaxVel(double& mean_v, double& max_v)
   {
     int num = 0;
     mean_v = 0.0, max_v = -1.0;
@@ -285,7 +284,7 @@ public:
     mean_v = mean_v / double(num);
   }
 
-  void getMeanAndMaxAcc(double &mean_a, double &max_a)
+  void getMeanAndMaxAcc(double& mean_a, double& max_a)
   {
     int num = 0;
     mean_a = 0.0, max_a = -1.0;
@@ -324,13 +323,13 @@ public:
     mean_a = mean_a / double(num);
   }
 
-  static PolynomialTraj minSnapTraj(const Eigen::MatrixXd &Pos, const Eigen::Vector3d &start_vel,
-                                    const Eigen::Vector3d &end_vel, const Eigen::Vector3d &start_acc,
-                                    const Eigen::Vector3d &end_acc, const Eigen::VectorXd &Time);
+  static PolynomialTraj minSnapTraj(const Eigen::MatrixXd& Pos, const Eigen::Vector3d& start_vel,
+                                    const Eigen::Vector3d& end_vel, const Eigen::Vector3d& start_acc,
+                                    const Eigen::Vector3d& end_acc, const Eigen::VectorXd& Time);
 
-  static PolynomialTraj one_segment_traj_gen(const Eigen::Vector3d &start_pt, const Eigen::Vector3d &start_vel, const Eigen::Vector3d &start_acc,
-                                             const Eigen::Vector3d &end_pt, const Eigen::Vector3d &end_vel, const Eigen::Vector3d &end_acc,
-                                             double t);
+  static PolynomialTraj one_segment_traj_gen(const Eigen::Vector3d& start_pt, const Eigen::Vector3d& start_vel,
+                                             const Eigen::Vector3d& start_acc, const Eigen::Vector3d& end_pt,
+                                             const Eigen::Vector3d& end_vel, const Eigen::Vector3d& end_acc, double t);
 };
 
 #endif

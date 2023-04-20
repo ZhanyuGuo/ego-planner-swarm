@@ -1,16 +1,16 @@
 #include <iostream>
 #include <traj_utils/polynomial_traj.h>
 
-PolynomialTraj PolynomialTraj::minSnapTraj(const Eigen::MatrixXd &Pos, const Eigen::Vector3d &start_vel,
-                                           const Eigen::Vector3d &end_vel, const Eigen::Vector3d &start_acc,
-                                           const Eigen::Vector3d &end_acc, const Eigen::VectorXd &Time)
+PolynomialTraj PolynomialTraj::minSnapTraj(const Eigen::MatrixXd& Pos, const Eigen::Vector3d& start_vel,
+                                           const Eigen::Vector3d& end_vel, const Eigen::Vector3d& start_acc,
+                                           const Eigen::Vector3d& end_acc, const Eigen::VectorXd& Time)
 {
   int seg_num = Time.size();
   Eigen::MatrixXd poly_coeff(seg_num, 3 * 6);
   Eigen::VectorXd Px(6 * seg_num), Py(6 * seg_num), Pz(6 * seg_num);
 
-  int num_f, num_p; // number of fixed and free variables
-  int num_d;        // number of all segments' derivatives
+  int num_f, num_p;  // number of fixed and free variables
+  int num_d;         // number of all segments' derivatives
 
   const static auto Factorial = [](int x) {
     int fac = 1;
@@ -75,23 +75,23 @@ PolynomialTraj PolynomialTraj::minSnapTraj(const Eigen::MatrixXd &Pos, const Eig
   /* ---------- Produce Selection Matrix C' ---------- */
   Eigen::MatrixXd Ct, C;
 
-  num_f = 2 * seg_num + 4; // 3 + 3 + (seg_num - 1) * 2 = 2m + 4
-  num_p = 2 * seg_num - 2; //(seg_num - 1) * 2 = 2m - 2
+  num_f = 2 * seg_num + 4;  // 3 + 3 + (seg_num - 1) * 2 = 2m + 4
+  num_p = 2 * seg_num - 2;  //(seg_num - 1) * 2 = 2m - 2
   num_d = 6 * seg_num;
   Ct = Eigen::MatrixXd::Zero(num_d, num_f + num_p);
   Ct(0, 0) = 1;
   Ct(2, 1) = 1;
-  Ct(4, 2) = 1; // stack the start point
+  Ct(4, 2) = 1;  // stack the start point
   Ct(1, 3) = 1;
   Ct(3, 2 * seg_num + 4) = 1;
   Ct(5, 2 * seg_num + 5) = 1;
 
   Ct(6 * (seg_num - 1) + 0, 2 * seg_num + 0) = 1;
-  Ct(6 * (seg_num - 1) + 1, 2 * seg_num + 1) = 1; // Stack the end point
+  Ct(6 * (seg_num - 1) + 1, 2 * seg_num + 1) = 1;  // Stack the end point
   Ct(6 * (seg_num - 1) + 2, 4 * seg_num + 0) = 1;
-  Ct(6 * (seg_num - 1) + 3, 2 * seg_num + 2) = 1; // Stack the end point
+  Ct(6 * (seg_num - 1) + 3, 2 * seg_num + 2) = 1;  // Stack the end point
   Ct(6 * (seg_num - 1) + 4, 4 * seg_num + 1) = 1;
-  Ct(6 * (seg_num - 1) + 5, 2 * seg_num + 3) = 1; // Stack the end point
+  Ct(6 * (seg_num - 1) + 5, 2 * seg_num + 3) = 1;  // Stack the end point
 
   for (int j = 2; j < seg_num; j++)
   {
@@ -184,8 +184,9 @@ PolynomialTraj PolynomialTraj::minSnapTraj(const Eigen::MatrixXd &Pos, const Eig
   return poly_traj;
 }
 
-PolynomialTraj PolynomialTraj::one_segment_traj_gen(const Eigen::Vector3d &start_pt, const Eigen::Vector3d &start_vel, const Eigen::Vector3d &start_acc,
-                                                    const Eigen::Vector3d &end_pt, const Eigen::Vector3d &end_vel, const Eigen::Vector3d &end_acc,
+PolynomialTraj PolynomialTraj::one_segment_traj_gen(const Eigen::Vector3d& start_pt, const Eigen::Vector3d& start_vel,
+                                                    const Eigen::Vector3d& start_acc, const Eigen::Vector3d& end_pt,
+                                                    const Eigen::Vector3d& end_vel, const Eigen::Vector3d& end_acc,
                                                     double t)
 {
   Eigen::MatrixXd C = Eigen::MatrixXd::Zero(6, 6), Crow(1, 6);

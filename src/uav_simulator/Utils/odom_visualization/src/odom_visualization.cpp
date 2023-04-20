@@ -35,7 +35,7 @@ ros::Publisher trajPub;
 ros::Publisher sensorPub;
 ros::Publisher meshPub;
 ros::Publisher heightPub;
-tf::TransformBroadcaster *broadcaster;
+tf::TransformBroadcaster* broadcaster;
 geometry_msgs::PoseStamped poseROS;
 nav_msgs::Path pathROS;
 visualization_msgs::Marker velROS;
@@ -48,7 +48,7 @@ sensor_msgs::Range heightROS;
 string _frame_id;
 int _drone_id;
 
-void odom_callback(const nav_msgs::Odometry::ConstPtr &msg)
+void odom_callback(const nav_msgs::Odometry::ConstPtr& msg)
 {
   if (msg->header.frame_id == string("null"))
     return;
@@ -440,7 +440,7 @@ void cmd_callback(const quadrotor_msgs::PositionCommand cmd)
   meshPub.publish(meshROS);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "odom_visualization");
   ros::NodeHandle n("~");
