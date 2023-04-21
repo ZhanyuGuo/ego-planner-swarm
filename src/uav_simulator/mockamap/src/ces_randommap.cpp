@@ -37,7 +37,7 @@ using namespace std;
 using namespace mocka;
 
 #if MAP_OR_WORLD
-const string kFrameIdNs_ = "map";
+const string kFrameIdNs_ = "world";
 #else
 const string kFrameIdNs_ = "world";
 #endif

@@ -54,7 +54,7 @@ namespace ego_planner
                                                        const vector<Eigen::Vector3d> &list, double scale, Eigen::Vector4d color, int id)
   {
     visualization_msgs::Marker sphere, line_strip;
-    sphere.header.frame_id = line_strip.header.frame_id = "map";
+    sphere.header.frame_id = line_strip.header.frame_id = "world";
     sphere.header.stamp = line_strip.header.stamp = ros::Time::now();
     sphere.type = visualization_msgs::Marker::SPHERE_LIST;
     line_strip.type = visualization_msgs::Marker::LINE_STRIP;
@@ -89,7 +89,7 @@ namespace ego_planner
                                                         const vector<Eigen::Vector3d> &list, double scale, Eigen::Vector4d color, int id)
   {
     visualization_msgs::Marker arrow;
-    arrow.header.frame_id = "map";
+    arrow.header.frame_id = "world";
     arrow.header.stamp = ros::Time::now();
     arrow.type = visualization_msgs::Marker::ARROW;
     arrow.action = visualization_msgs::Marker::ADD;
