@@ -48,6 +48,8 @@ private:
   bool first_plan_;
 
   std::vector<ros::Publisher> pos_cmd_pubs_;
+
+  void handleObstacles();
 };
 
 #endif

@@ -112,10 +112,10 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
   double dt = (current_time_ - last_time_).toSec();
   last_time_ = current_time_;
 
-  // // update closest obstacle
+  // // update closest obstacle TODO
   // handleObstacles();
 
-  // // update pedestrian around
+  // // update pedestrian around, NO NEED in centerlized control
   // handlePedestrians();
 
   // Compute Social Forces
@@ -124,7 +124,7 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
   // Update model
   agents_ = sfm::SFM.updatePosition(agents_, dt);
 
-  // output position, velocity, etc. TODO
+  // output position, velocity, etc.
   for (int i = 0; i < agent_number_; i++)
   {
     sfm::Agent agent = agents_[i];
@@ -140,8 +140,8 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
     cmd.position.y = agent.position.getY();
     cmd.position.z = 1.0;
 
-    cmd.velocity.x = 0.0;
-    cmd.velocity.y = 0.0;
+    cmd.velocity.x = agent.velocity.getX();
+    cmd.velocity.y = agent.velocity.getY();
     cmd.velocity.z = 0.0;
 
     cmd.acceleration.x = 0.0;
@@ -149,10 +149,14 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
     cmd.acceleration.z = 0.0;
 
     cmd.yaw = agent.yaw.toRadian();
-    cmd.yaw_dot = 0.0;
+    cmd.yaw_dot = agent.angularVelocity;
 
     pos_cmd_pubs_[i].publish(cmd);
   }
+}
+
+void SfmPlanner::handleObstacles()
+{
 }
 
 int main(int argc, char** argv)
