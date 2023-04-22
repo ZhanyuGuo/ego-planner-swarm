@@ -1,4 +1,4 @@
-#include <sfm_planner/sfm_planner_single_node.h>
+#include <sfm_planner/sfm_planner_distributed_node.h>
 
 void SfmPlanner::init(ros::NodeHandle& nh)
 {
@@ -65,27 +65,23 @@ void SfmPlanner::initAgent()
   nh_.param("sfm/agent_goal_weight", agent_.params.forceFactorDesired, 2.0);
   nh_.param("sfm/agent_obstacle_weight", agent_.params.forceFactorObstacle, 10.0);
   nh_.param("sfm/agent_social_weight", agent_.params.forceFactorSocial, 2.1);
+  // agent_.params.forceSigmaObstacle = 0.4;
 
   // group weights
   // TODO
 
-  // for (int i = 0; i < agent_number_; i++)
-  // {
-  //   sfm::Agent agent = agents_[i];
-  //   ROS_INFO("Agent %d, position: (%.2f, %.2f)", i, agent.position.getX(), agent.position.getY());
+  ROS_INFO("Agent %d, position: (%.2f, %.2f)", agent_id_, agent_.position.getX(), agent_.position.getY());
 
-  //   int j = 0;
-  //   for (auto waypoint : agent.goals)
-  //   {
-  //     ROS_INFO("Agent %d, goal%d: (%.2f, %.2f)", i, j, waypoint.center.getX(), waypoint.center.getY());
-  //     j++;
-  //   }
-  // }
+  int j = 0;
+  for (auto waypoint : agent_.goals)
+  {
+    ROS_INFO("Agent %d, goal%d: (%.2f, %.2f)", agent_id_, j, waypoint.center.getX(), waypoint.center.getY());
+    j++;
+  }
 }
 
 void SfmPlanner::odometryCallback(const nav_msgs::OdometryConstPtr& msg, int agent_id)
 {
-  // std::cout << agent_id << std::endl;
   sfm::Agent other;
   other.id = agent_id;
   other.position.set(msg->pose.pose.position.x, msg->pose.pose.position.y);

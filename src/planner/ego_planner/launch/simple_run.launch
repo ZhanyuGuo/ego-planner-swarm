@@ -1,5 +1,6 @@
 <launch>
   <include file="$(find ego_planner)/launch/rviz.launch" />
-  <!-- <include file="$(find ego_planner)/launch/swarm.launch"/> -->
-  <include file="$(find ego_planner)/launch/swarm_small.launch" />
+  <include file="$(find ego_planner)/launch/swarm.launch" />
+  <!-- <include file="$(find ego_planner)/launch/swarm_small.launch" /> -->
+  <!-- <include file="$(find ego_planner)/launch/swarm_large.launch" /> -->
 </launch>

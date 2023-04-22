@@ -1,0 +1,63 @@
+<launch>
+  <!-- size of map, change the size inflate x, y, z according to your application -->
+  <arg name="map_size_x" />
+  <arg name="map_size_y" />
+  <arg name="map_size_z" />
+  <arg name="init_x" />
+  <arg name="init_y" />
+  <arg name="init_z" />
+  <arg name="target_x" />
+  <arg name="target_y" />
+  <arg name="target_z" />
+
+  <arg name="drone_id" />
+  <arg name="cycle" />
+  <arg name="waypoint_number" />
+  <arg name="max_velocity" />
+  <arg name="goal_weight" />
+  <arg name="obstacle_weight" />
+  <arg name="social_weight" />
+
+  <!-- topic of your odometry such as VIO or LIO -->
+  <arg name="odom_topic" />
+
+  <!-- number of moving objects -->
+  <arg name="obj_num" value="10" />
+
+  <!-- main algorithm params -->
+  <node pkg="sfm_planner" name="drone_$(arg drone_id)_sfm_planner_node"
+    type="sfm_planner_distributed_node" output="screen">
+    <param name="sfm/agent_id" value="$(arg drone_id)" />
+    <param name="sfm/agent_cycle" value="$(arg cycle)" />
+
+    <param name="sfm/agent_init_x" value="$(arg init_x)" />
+    <param name="sfm/agent_init_y" value="$(arg init_y)" />
+
+    <param name="sfm/agent_waypoint_number" value="$(arg waypoint_number)" />
+    <param name="sfm/agent_waypoint0_x" value="$(arg init_x)" />
+    <param name="sfm/agent_waypoint0_y" value="$(arg init_y)" />
+    <param name="sfm/agent_waypoint1_x" value="$(arg target_x)" />
+    <param name="sfm/agent_waypoint1_y" value="$(arg target_y)" />
+    <param name="sfm/agent_max_velocity" value="$(arg max_velocity)" />
+    <param name="sfm/agent_goal_weight" value="$(arg goal_weight)" />
+    <param name="sfm/agent_obstacle_weight" value="$(arg obstacle_weight)" />
+    <param name="sfm/agent_social_weight" value="$(arg social_weight)" />
+  </node>
+
+  <!-- use simulator -->
+  <include file="$(find sfm_planner)/launch/simulator.xml">
+    <arg name="drone_id" value="$(arg drone_id)" />
+
+    <arg name="map_size_x_" value="$(arg map_size_x)" />
+    <arg name="map_size_y_" value="$(arg map_size_y)" />
+    <arg name="map_size_z_" value="$(arg map_size_z)" />
+
+    <arg name="init_x_" value="$(arg init_x)" />
+    <arg name="init_y_" value="$(arg init_y)" />
+    <arg name="init_z_" value="$(arg init_z)" />
+
+    <arg name="odometry_topic" value="$(arg odom_topic)" />
+  </include>
+
+
+</launch>
