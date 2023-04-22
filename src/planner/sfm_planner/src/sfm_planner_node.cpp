@@ -1,4 +1,3 @@
-
 #include <sfm_planner/sfm_planner_node.h>
 
 void SfmPlanner::init(ros::NodeHandle& nh)
@@ -15,13 +14,20 @@ void SfmPlanner::init(ros::NodeHandle& nh)
     pos_cmd_pubs_.push_back(pos_cmd_pub);
   }
 
-  // for (int i = 0; i < agent_number_; i++)
-  // {
-  //   ros::Subscriber odom_sub =
-  //       nh_.subscribe<nav_msgs::Odometry>("/drone_" + std::to_string(i) + "_visual_slam/odom", 1,
-  //                                         boost::bind(&SfmPlanner::odometryCallback, this, _1, i));
-  //   odom_subs_.push_back(odom_sub);
-  // }
+  for (int i = 0; i < agent_number_; i++)
+  {
+    // ros::Subscriber odom_sub =
+    //     nh_.subscribe<nav_msgs::Odometry>("/drone_" + std::to_string(i) + "_visual_slam/odom", 1,
+    //                                       boost::bind(&SfmPlanner::odometryCallback, this, _1, i));
+    // odom_subs_.push_back(odom_sub);
+
+    ros::Subscriber point_cloud2_sub =
+        nh_.subscribe<sensor_msgs::PointCloud2>("/drone_" + std::to_string(i) + "_pcl_render_node/cloud", 1,
+                                                boost::bind(&SfmPlanner::pointcloudCallback, this, _1, i));
+    point_cloud2_subs_.push_back(point_cloud2_sub);
+    sensor_msgs::PointCloud point_cloud;
+    point_clouds_.push_back(point_cloud);
+  }
 
   initAgents();
 
@@ -99,6 +105,14 @@ void SfmPlanner::initAgents()
 //   std::cout << agent_id << std::endl;
 // }
 
+void SfmPlanner::pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg, int agent_id)
+{
+  if (!has_point_cloud_)
+    has_point_cloud_ = true;
+
+  sensor_msgs::convertPointCloud2ToPointCloud(*msg, point_clouds_[agent_id]);
+}
+
 void SfmPlanner::planCallback(const ros::TimerEvent& e)
 {
   if (first_plan_)
@@ -112,8 +126,8 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
   double dt = (current_time_ - last_time_).toSec();
   last_time_ = current_time_;
 
-  // // update closest obstacle TODO
-  // handleObstacles();
+  // update closest obstacle
+  handleObstacles();
 
   // // update pedestrian around, NO NEED in centerlized control
   // handlePedestrians();
@@ -157,6 +171,42 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
 
 void SfmPlanner::handleObstacles()
 {
+  if (!has_point_cloud_)
+    return;
+
+  for (int i = 0; i < agent_number_; i++)
+  {
+    sensor_msgs::PointCloud point_cloud;
+    point_cloud = point_clouds_[i];
+
+    double x = agents_[i].position.getX();
+    double y = agents_[i].position.getY();
+    double z = 1.0;
+
+    double min_dist, min_x, min_y, min_z;
+    min_dist = std::hypot(x - point_cloud.points[0].x, y - point_cloud.points[0].y, z - point_cloud.points[0].z);
+    min_x = point_cloud.points[0].x;
+    min_y = point_cloud.points[0].y;
+    min_z = point_cloud.points[0].z;
+
+    for (int j = 1; j < point_cloud.points.size(); j++)
+    {
+      if (point_cloud.points[0].z != z)
+        continue;
+
+      double dist = std::hypot(x - point_cloud.points[0].x, y - point_cloud.points[0].y);
+      if (dist < min_dist)
+      {
+        min_dist = dist;
+        min_x = point_cloud.points[j].x;
+        min_y = point_cloud.points[j].y;
+        // min_z = point_cloud.points[j].z;
+      }
+    }
+    // std::cout << min_x << ", " << min_y << ", " << min_z << ": " << min_dist << std::endl;
+    utils::Vector2d ob(min_x, min_y);
+    agents_[i].obstacles1.push_back(ob);
+  }
 }
 
 int main(int argc, char** argv)

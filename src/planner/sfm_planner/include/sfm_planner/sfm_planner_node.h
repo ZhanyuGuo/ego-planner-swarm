@@ -5,11 +5,13 @@
 #include <iostream>
 #include <vector>
 #include <string>
-// #include <boost/bind.hpp>
+#include <cmath>
+#include <boost/bind.hpp>
 
 // ROS
 #include <ros/ros.h>
 // #include <nav_msgs/Odometry.h>
+#include <sensor_msgs/point_cloud_conversion.h>
 
 // Social Force Model
 #include <lightsfm/sfm.hpp>
@@ -19,7 +21,7 @@
 class SfmPlanner
 {
 public:
-  SfmPlanner() : first_plan_(true)
+  SfmPlanner() : first_plan_(true), has_point_cloud_(false)
   {
   }
 
@@ -49,7 +51,12 @@ private:
 
   std::vector<ros::Publisher> pos_cmd_pubs_;
 
+  std::vector<ros::Subscriber> point_cloud2_subs_;
+  void pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg, int agent_id);
+  std::vector<sensor_msgs::PointCloud> point_clouds_;
+
   void handleObstacles();
+  bool has_point_cloud_;
 };
 
 #endif
