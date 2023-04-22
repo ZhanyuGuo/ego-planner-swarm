@@ -134,6 +134,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/sfm_planner_node.cpp)
+add_executable(${PROJECT_NAME}_single_node src/sfm_planner_single_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -147,6 +148,10 @@ add_executable(${PROJECT_NAME}_node src/sfm_planner_node.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+target_link_libraries(${PROJECT_NAME}_single_node
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
 )

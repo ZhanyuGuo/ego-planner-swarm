@@ -13,6 +13,7 @@ void SfmPlanner::init(ros::NodeHandle& nh)
     pos_cmd_pubs_.push_back(pos_cmd_pub);
   }
 
+  point_clouds_.resize(agent_number_);
   for (int i = 0; i < agent_number_; i++)
   {
     // ros::Subscriber odom_sub =
@@ -25,8 +26,8 @@ void SfmPlanner::init(ros::NodeHandle& nh)
                                                 boost::bind(&SfmPlanner::pointcloudCallback, this, _1, i));
     point_cloud2_subs_.push_back(point_cloud2_sub);
 
-    sensor_msgs::PointCloud point_cloud;
-    point_clouds_.push_back(point_cloud);
+    // sensor_msgs::PointCloud point_cloud;
+    // point_clouds_.push_back(point_cloud);
   }
 
   initAgents();
