@@ -204,7 +204,7 @@ void SfmPlanner::handleObstacles()
       if (point_cloud.points[j].z != z)
         continue;
 
-      double dist = std::hypot(x - point_cloud.points[0].x, y - point_cloud.points[0].y);
+      double dist = std::hypot(x - point_cloud.points[j].x, y - point_cloud.points[j].y);
       if (dist < min_dist)
       {
         min_dist = dist;
