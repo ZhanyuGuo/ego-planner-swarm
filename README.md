@@ -8,7 +8,7 @@ git clone https://github.com/ZJU-FAST-Lab/ego-planner-swarm.git
 ~~refer to issue [#9](https://github.com/ZJU-FAST-Lab/ego-planner-swarm/issues/9)~~ (Solved)
 ```
 cd ego-planner-swarm
-catkin_make -j1
+catkin_make # or -j1
 source devel/setup.bash
 roslaunch ego_planner simple_run.launch
 ```

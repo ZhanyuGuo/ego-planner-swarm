@@ -8,19 +8,17 @@ void SfmPlanner::init(ros::NodeHandle& nh)
   pos_cmd_pub_ =
       nh_.advertise<quadrotor_msgs::PositionCommand>("/drone_" + std::to_string(agent_id_) + "_planning/pos_cmd", 1);
 
-  point_cloud2_sub_ =
-      nh_.subscribe<sensor_msgs::PointCloud2>("/drone_" + std::to_string(agent_id_) + "_pcl_render_node/cloud", 1,
-                                              boost::bind(&SfmPlanner::pointcloudCallback, this, _1, agent_id_));
+  point_cloud2_sub_ = nh_.subscribe<sensor_msgs::PointCloud2>(
+      "/drone_" + std::to_string(agent_id_) + "_pcl_render_node/cloud", 1, &SfmPlanner::pointcloudCallback, this);
 
-  for (int i = 0; i < agent_id_ - 1; i++)
+  others_.resize(agent_id_);
+  for (int i = 0; i < agent_id_; i++)
   {
     // get higher priorty agents' positions
     ros::Subscriber odom_sub =
         nh_.subscribe<nav_msgs::Odometry>("/drone_" + std::to_string(i) + "_visual_slam/odom", 1,
                                           boost::bind(&SfmPlanner::odometryCallback, this, _1, i));
     odom_subs_.push_back(odom_sub);
-
-    others_p_.resize(agent_id_ - 1);
   }
 
   initAgent();
@@ -87,10 +85,24 @@ void SfmPlanner::initAgent()
 
 void SfmPlanner::odometryCallback(const nav_msgs::OdometryConstPtr& msg, int agent_id)
 {
-  std::cout << agent_id << std::endl;
+  // std::cout << agent_id << std::endl;
+  sfm::Agent other;
+  other.id = agent_id;
+  other.position.set(msg->pose.pose.position.x, msg->pose.pose.position.y);
+
+  tf::Quaternion quat;
+  tf::quaternionMsgToTF(msg->pose.pose.orientation, quat);
+  double roll, pitch, yaw;
+  tf::Matrix3x3(quat).getRPY(roll, pitch, yaw);
+  other.yaw = utils::Angle::fromRadian(yaw);
+  other.radius = agent_.radius;
+  other.velocity.set(msg->twist.twist.linear.x, msg->twist.twist.linear.y);
+  other.linearVelocity = other.velocity.norm();
+  other.angularVelocity = msg->twist.twist.angular.z;
+  others_[agent_id] = other;
 }
 
-void SfmPlanner::pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg, int agent_id)
+void SfmPlanner::pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg)
 {
   if (msg->data.size() == 0)
   {
@@ -122,8 +134,8 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
   // update closest obstacle
   handleObstacles();
 
-  // update pedestrian around
-  handlePedestrians();
+  // update pedestrian around, handled in odomCallback
+  // handlePedestrians();
 
   // Compute Social Forces
   sfm::SFM.computeForces(agent_, others_);
@@ -190,16 +202,15 @@ void SfmPlanner::handleObstacles()
   agent_.obstacles1.push_back(ob);
 }
 
-void SfmPlanner::handlePedestrians()
-{
-  others_.clear();
+// void SfmPlanner::handlePedestrians()
+// {
+//   others_.clear();
 
-  for (int i = 0; i < agent_id_ - 1; i++)
-  {
-    /* code */
-  }
-  
-}
+//   for (int i = 0; i < agent_id_ - 1; i++)
+//   {
+//     /* code */
+//   }
+// }
 
 int main(int argc, char** argv)
 {

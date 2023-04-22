@@ -1,0 +1,126 @@
+<launch>
+  <arg name="map_size_x" value="42.0" />
+  <arg name="map_size_y" value="30.0" />
+  <arg name="map_size_z" value=" 5.0" />
+
+  <arg name="agent_number" value="2" />
+  <arg name="agent0_cycle" value="true" />
+  <arg name="agent1_cycle" value="true" />
+
+  <arg name="agent0_init_x" value="20.0" />
+  <arg name="agent0_init_y" value="9.0" />
+  <arg name="agent1_init_x" value="-20.0" />
+  <arg name="agent1_init_y" value="-9.0" />
+
+  <arg name="agent0_waypoint_number" value="2" />
+  <arg name="agent0_waypoint0_x" value="20.0" />
+  <arg name="agent0_waypoint0_y" value="9.0" />
+  <arg name="agent0_waypoint1_x" value="-20.0" />
+  <arg name="agent0_waypoint1_y" value="-9.0" />
+  <arg name="agent0_max_velocity" value="0.8" />
+  <arg name="agent0_goal_weight" value="2.0" />
+  <arg name="agent0_obstacle_weight" value="10.0" />
+  <arg name="agent0_social_weight" value="2.1" />
+
+  <arg name="agent1_waypoint_number" value="2" />
+  <arg name="agent1_waypoint0_x" value="-20.0" />
+  <arg name="agent1_waypoint0_y" value="-9.0" />
+  <arg name="agent1_waypoint1_x" value="20.0" />
+  <arg name="agent1_waypoint1_y" value="9.0" />
+  <arg name="agent1_max_velocity" value="0.8" />
+  <arg name="agent1_goal_weight" value="2.0" />
+  <arg name="agent1_obstacle_weight" value="10.0" />
+  <arg name="agent1_social_weight" value="2.1" />
+
+  <arg name="odom_topic" value="visual_slam/odom" />
+
+  <node pkg="map_generator" name="random_forest" type="random_forest" output="screen">
+    <param name="map/x_size" value="36" />
+    <param name="map/y_size" value="20" />
+    <param name="map/z_size" value="3" />
+    <param name="map/resolution" value="0.1" />
+    <param name="map/obs_num" value="200" />
+    <param name="map/circle_num" value="200" />
+
+    <param name="ObstacleShape/lower_rad" value="0.5" />
+    <param name="ObstacleShape/upper_rad" value="0.7" />
+    <param name="ObstacleShape/lower_hei" value="0.0" />
+    <param name="ObstacleShape/upper_hei" value="3.0" />
+    <param name="ObstacleShape/radius_l" value="0.7" />
+    <param name="ObstacleShape/radius_h" value="0.5" />
+    <param name="ObstacleShape/z_l" value="0.7" />
+    <param name="ObstacleShape/z_h" value="0.8" />
+    <param name="ObstacleShape/theta" value="0.5" />
+
+    <!-- <param name="sensing/radius" value="5.0" /> -->
+    <param name="sensing/rate" value="1.0" />
+
+    <param name="min_distance" value="1.2" />
+  </node>
+
+  <!-- <node pkg="sfm_planner" name="sfm_planner_node" type="sfm_planner_node" output="screen">
+    <param name="sfm/agent_number" value="$(arg agent_number)" />
+    <param name="sfm/agent0_cycle" value="$(arg agent0_cycle)" />
+    <param name="sfm/agent1_cycle" value="$(arg agent1_cycle)" />
+
+    <param name="sfm/agent0_init_x" value="$(arg agent0_init_x)" />
+    <param name="sfm/agent0_init_y" value="$(arg agent0_init_y)" />
+
+    <param name="sfm/agent1_init_x" value="$(arg agent1_init_x)" />
+    <param name="sfm/agent1_init_y" value="$(arg agent1_init_y)" />
+
+    <param name="sfm/agent0_waypoint_number" value="$(arg agent0_waypoint_number)" />
+    <param name="sfm/agent0_waypoint0_x" value="$(arg agent0_waypoint0_x)" />
+    <param name="sfm/agent0_waypoint0_y" value="$(arg agent0_waypoint0_y)" />
+    <param name="sfm/agent0_waypoint1_x" value="$(arg agent0_waypoint1_x)" />
+    <param name="sfm/agent0_waypoint1_y" value="$(arg agent0_waypoint1_y)" />
+    <param name="sfm/agent0_max_velocity" value="$(arg agent0_max_velocity)" />
+    <param name="sfm/agent0_goal_weight" value="$(arg agent0_goal_weight)" />
+    <param name="sfm/agent0_obstacle_weight" value="$(arg agent0_obstacle_weight)" />
+    <param name="sfm/agent0_social_weight" value="$(arg agent0_social_weight)" />
+
+    <param name="sfm/agent1_waypoint_number" value="$(arg agent1_waypoint_number)" />
+    <param name="sfm/agent1_waypoint0_x" value="$(arg agent1_waypoint0_x)" />
+    <param name="sfm/agent1_waypoint0_y" value="$(arg agent1_waypoint0_y)" />
+    <param name="sfm/agent1_waypoint1_x" value="$(arg agent1_waypoint1_x)" />
+    <param name="sfm/agent1_waypoint1_y" value="$(arg agent1_waypoint1_y)" />
+    <param name="sfm/agent1_max_velocity" value="$(arg agent1_max_velocity)" />
+    <param name="sfm/agent1_goal_weight" value="$(arg agent1_goal_weight)" />
+    <param name="sfm/agent1_obstacle_weight" value="$(arg agent1_obstacle_weight)" />
+    <param name="sfm/agent1_social_weight" value="$(arg agent1_social_weight)" />
+  </node> -->
+
+  <include file="$(find sfm_planner)/launch/run_in_sim.launch">
+    <arg name="drone_id" value="0" />
+
+    <arg name="init_x" value="$(arg agent0_init_x)" />
+    <arg name="init_y" value="$(arg agent0_init_y)" />
+    <arg name="init_z" value="1.0" />
+
+    <arg name="target_x" value="$(arg agent0_waypoint0_x)" />
+    <arg name="target_y" value="$(arg agent0_waypoint0_x)" />
+    <arg name="target_z" value="1.0" />
+
+    <arg name="map_size_x" value="$(arg map_size_x)" />
+    <arg name="map_size_y" value="$(arg map_size_y)" />
+    <arg name="map_size_z" value="$(arg map_size_z)" />
+    <arg name="odom_topic" value="$(arg odom_topic)" />
+  </include>
+
+  <include file="$(find sfm_planner)/launch/run_in_sim.launch">
+    <arg name="drone_id" value="1" />
+
+    <arg name="init_x" value="$(arg agent1_init_x)" />
+    <arg name="init_y" value="$(arg agent1_init_y)" />
+    <arg name="init_z" value="1.0" />
+
+    <arg name="target_x" value="$(arg agent1_waypoint0_x)" />
+    <arg name="target_y" value="$(arg agent1_waypoint0_x)" />
+    <arg name="target_z" value="1.0" />
+
+    <arg name="map_size_x" value="$(arg map_size_x)" />
+    <arg name="map_size_y" value="$(arg map_size_y)" />
+    <arg name="map_size_z" value="$(arg map_size_z)" />
+    <arg name="odom_topic" value="$(arg odom_topic)" />
+  </include>
+</launch>

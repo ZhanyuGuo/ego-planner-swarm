@@ -12,6 +12,7 @@
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
 #include <sensor_msgs/point_cloud_conversion.h>
+#include <tf/transform_datatypes.h>
 
 // Social Force Model
 #include <lightsfm/sfm.hpp>
@@ -38,7 +39,7 @@ private:
   int agent_id_;
   sfm::Agent agent_;
   std::vector<sfm::Agent> others_;
-  std::vector<utils::Vector2d> others_p_;
+  // std::vector<utils::Vector2d> others_p_;
 
   ros::NodeHandle nh_;
   ros::Timer plan_timer_;
@@ -52,10 +53,10 @@ private:
   sensor_msgs::PointCloud point_cloud_;
 
   void handleObstacles();
-  void handlePedestrians();
+  // void handlePedestrians();
 
   void odometryCallback(const nav_msgs::OdometryConstPtr& msg, int agent_id);
-  void pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg, int agent_id);
+  void pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg);
 
   void planCallback(const ros::TimerEvent& e);
 };
