@@ -21,7 +21,7 @@
 class SfmPlanner
 {
 public:
-  SfmPlanner() : first_plan_(true), has_point_cloud_(false)
+  SfmPlanner() : plan_flag_(false), point_cloud_flag_(false)
   {
   }
 
@@ -34,29 +34,27 @@ public:
   void initAgents();
 
 private:
-  ros::NodeHandle nh_;
-
+  bool plan_flag_, point_cloud_flag_;
   int agent_number_;
   std::vector<sfm::Agent> agents_;
-  int current_agent_id_;
 
-  // std::vector<ros::Subscriber> odom_subs_;
+  ros::NodeHandle nh_;
   ros::Timer plan_timer_;
-
-  // void odometryCallback(const nav_msgs::OdometryConstPtr& msg, int agent_id);
-  void planCallback(const ros::TimerEvent& e);
-
   ros::Time current_time_, last_time_;
-  bool first_plan_;
 
   std::vector<ros::Publisher> pos_cmd_pubs_;
 
+  // std::vector<ros::Subscriber> odom_subs_;
   std::vector<ros::Subscriber> point_cloud2_subs_;
-  void pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg, int agent_id);
+
   std::vector<sensor_msgs::PointCloud> point_clouds_;
 
   void handleObstacles();
-  bool has_point_cloud_;
+
+  // void odometryCallback(const nav_msgs::OdometryConstPtr& msg, int agent_id);
+  void pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg, int agent_id);
+
+  void planCallback(const ros::TimerEvent& e);
 };
 
 #endif

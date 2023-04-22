@@ -6,7 +6,6 @@ void SfmPlanner::init(ros::NodeHandle& nh)
   nh_.param("sfm/agent_number", agent_number_, 0);
   // ROS_INFO("Number of agents: %d", agent_number_);
 
-  // pos_cmd_pub_ = nh_.advertise<quadrotor_msgs::PositionCommand>("/position_cmd", 50);
   for (int i = 0; i < agent_number_; i++)
   {
     ros::Publisher pos_cmd_pub =
@@ -25,6 +24,7 @@ void SfmPlanner::init(ros::NodeHandle& nh)
         nh_.subscribe<sensor_msgs::PointCloud2>("/drone_" + std::to_string(i) + "_pcl_render_node/cloud", 1,
                                                 boost::bind(&SfmPlanner::pointcloudCallback, this, _1, i));
     point_cloud2_subs_.push_back(point_cloud2_sub);
+
     sensor_msgs::PointCloud point_cloud;
     point_clouds_.push_back(point_cloud);
   }
@@ -62,10 +62,11 @@ void SfmPlanner::initAgents()
     nh_.param("sfm/agent" + std::to_string(i) + "_waypoint_number", waypoint_number, 0);
     for (int j = 0; j < waypoint_number; j++)
     {
-      sfm::Goal waypoint;
       double x, y;
       nh_.param("sfm/agent" + std::to_string(i) + "_waypoint" + std::to_string(j) + "_x", x, 0.0);
       nh_.param("sfm/agent" + std::to_string(i) + "_waypoint" + std::to_string(j) + "_y", y, 0.0);
+
+      sfm::Goal waypoint;
       waypoint.center.set(x, y);
       waypoint.radius = 0.3;
       agent.goals.push_back(waypoint);
@@ -107,18 +108,26 @@ void SfmPlanner::initAgents()
 
 void SfmPlanner::pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg, int agent_id)
 {
-  if (!has_point_cloud_)
-    has_point_cloud_ = true;
+  if (msg->data.size() == 0)
+  {
+    point_cloud_flag_ == false;
+    return;
+  }
+
+  if (!point_cloud_flag_)
+    point_cloud_flag_ = true;
 
   sensor_msgs::convertPointCloud2ToPointCloud(*msg, point_clouds_[agent_id]);
 }
 
 void SfmPlanner::planCallback(const ros::TimerEvent& e)
 {
-  if (first_plan_)
+  // ros::Time a = ros::Time::now();
+
+  if (!plan_flag_)
   {
     last_time_ = ros::Time::now();
-    first_plan_ = false;
+    plan_flag_ = true;
     return;
   }
 
@@ -167,11 +176,13 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
 
     pos_cmd_pubs_[i].publish(cmd);
   }
+  // ros::Time b = ros::Time::now();
+  // std::cout << (b - a).toNSec() << std::endl;
 }
 
 void SfmPlanner::handleObstacles()
 {
-  if (!has_point_cloud_)
+  if (!point_cloud_flag_)
     return;
 
   for (int i = 0; i < agent_number_; i++)
@@ -183,15 +194,14 @@ void SfmPlanner::handleObstacles()
     double y = agents_[i].position.getY();
     double z = 1.0;
 
-    double min_dist, min_x, min_y, min_z;
-    min_dist = std::hypot(x - point_cloud.points[0].x, y - point_cloud.points[0].y, z - point_cloud.points[0].z);
+    double min_dist, min_x, min_y;
+    min_dist = std::hypot(x - point_cloud.points[0].x, y - point_cloud.points[0].y);
     min_x = point_cloud.points[0].x;
     min_y = point_cloud.points[0].y;
-    min_z = point_cloud.points[0].z;
 
     for (int j = 1; j < point_cloud.points.size(); j++)
     {
-      if (point_cloud.points[0].z != z)
+      if (point_cloud.points[j].z != z)
         continue;
 
       double dist = std::hypot(x - point_cloud.points[0].x, y - point_cloud.points[0].y);
@@ -200,10 +210,9 @@ void SfmPlanner::handleObstacles()
         min_dist = dist;
         min_x = point_cloud.points[j].x;
         min_y = point_cloud.points[j].y;
-        // min_z = point_cloud.points[j].z;
       }
     }
-    // std::cout << min_x << ", " << min_y << ", " << min_z << ": " << min_dist << std::endl;
+    // std::cout << min_x << ", " << min_y << ": " << min_dist << std::endl;
     utils::Vector2d ob(min_x, min_y);
     agents_[i].obstacles1.push_back(ob);
   }
@@ -211,14 +220,7 @@ void SfmPlanner::handleObstacles()
 
 int main(int argc, char** argv)
 {
-  // # a simple way to valid sfm-model
-  // 1. disable ego_planner
-  // 2. enable sfm_planner
-  // 3. publish quadrotor_msgs::PositionCommand with update x, y, z to /position_cmd
-  // 4. centerlized control first: all position known, all controllable...
-  // 5. global plan first: no feedback from environment...
   ros::init(argc, argv, "sfm_planner_node");
-
   ros::NodeHandle nh("~");
 
   SfmPlanner sfm_planner;

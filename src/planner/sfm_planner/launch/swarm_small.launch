@@ -74,12 +74,20 @@
     <param name="sfm/agent0_waypoint0_y" value="$(arg agent0_waypoint0_y)" />
     <param name="sfm/agent0_waypoint1_x" value="$(arg agent0_waypoint1_x)" />
     <param name="sfm/agent0_waypoint1_y" value="$(arg agent0_waypoint1_y)" />
+    <param name="sfm/agent0_max_velocity" value="$(arg agent0_max_velocity)" />
+    <param name="sfm/agent0_goal_weight" value="$(arg agent0_goal_weight)" />
+    <param name="sfm/agent0_obstacle_weight" value="$(arg agent0_obstacle_weight)" />
+    <param name="sfm/agent0_social_weight" value="$(arg agent0_social_weight)" />
 
     <param name="sfm/agent1_waypoint_number" value="$(arg agent1_waypoint_number)" />
     <param name="sfm/agent1_waypoint0_x" value="$(arg agent1_waypoint0_x)" />
     <param name="sfm/agent1_waypoint0_y" value="$(arg agent1_waypoint0_y)" />
     <param name="sfm/agent1_waypoint1_x" value="$(arg agent1_waypoint1_x)" />
     <param name="sfm/agent1_waypoint1_y" value="$(arg agent1_waypoint1_y)" />
+    <param name="sfm/agent1_max_velocity" value="$(arg agent1_max_velocity)" />
+    <param name="sfm/agent1_goal_weight" value="$(arg agent1_goal_weight)" />
+    <param name="sfm/agent1_obstacle_weight" value="$(arg agent1_obstacle_weight)" />
+    <param name="sfm/agent1_social_weight" value="$(arg agent1_social_weight)" />
   </node>
 
   <include file="$(find sfm_planner)/launch/run_in_sim.launch">
