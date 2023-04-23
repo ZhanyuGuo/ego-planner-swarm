@@ -22,7 +22,7 @@
 class SfmPlanner
 {
 public:
-  SfmPlanner() : plan_flag_(false), point_cloud_flag_(false)
+  SfmPlanner() : plan_flag_(false), point_cloud_flag_(false), odom_flag_(false)
   {
   }
 
@@ -35,10 +35,11 @@ public:
   void initAgent();
 
 private:
-  bool plan_flag_, point_cloud_flag_;
-  int agent_id_;
+  bool plan_flag_, point_cloud_flag_, odom_flag_;
+  int agent_number_, agent_id_;
   sfm::Agent agent_;
   std::vector<sfm::Agent> others_;
+  std::vector<nav_msgs::Odometry> other_odoms_;
   // std::vector<utils::Vector2d> others_p_;
 
   ros::NodeHandle nh_;
@@ -53,7 +54,7 @@ private:
   sensor_msgs::PointCloud point_cloud_;
 
   void handleObstacles();
-  // void handlePedestrians();
+  void handlePedestrians();
 
   void odometryCallback(const nav_msgs::OdometryConstPtr& msg, int agent_id);
   void pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg);

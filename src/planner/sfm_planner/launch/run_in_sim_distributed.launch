@@ -10,6 +10,7 @@
   <arg name="target_y" />
   <arg name="target_z" />
 
+  <arg name="agent_number" />
   <arg name="drone_id" />
   <arg name="cycle" />
   <arg name="waypoint_number" />
@@ -17,6 +18,7 @@
   <arg name="goal_weight" />
   <arg name="obstacle_weight" />
   <arg name="social_weight" />
+  <arg name="sigma_obstacle" />
 
   <!-- topic of your odometry such as VIO or LIO -->
   <arg name="odom_topic" />
@@ -27,6 +29,7 @@
   <!-- main algorithm params -->
   <node pkg="sfm_planner" name="drone_$(arg drone_id)_sfm_planner_node"
     type="sfm_planner_distributed_node" output="screen">
+    <param name="sfm/agent_number" value="$(arg agent_number)" />
     <param name="sfm/agent_id" value="$(arg drone_id)" />
     <param name="sfm/agent_cycle" value="$(arg cycle)" />
 
@@ -42,6 +45,7 @@
     <param name="sfm/agent_goal_weight" value="$(arg goal_weight)" />
     <param name="sfm/agent_obstacle_weight" value="$(arg obstacle_weight)" />
     <param name="sfm/agent_social_weight" value="$(arg social_weight)" />
+    <param name="sfm/agent_sigma_obstacle" value="$(arg sigma_obstacle)" />
   </node>
 
   <!-- use simulator -->

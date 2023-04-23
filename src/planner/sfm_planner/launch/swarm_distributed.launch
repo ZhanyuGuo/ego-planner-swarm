@@ -3,13 +3,14 @@
   <arg name="map_size_y" value="30.0" />
   <arg name="map_size_z" value=" 5.0" />
   <arg name="odom_topic" value="visual_slam/odom" />
+  <arg name="agent_number" value="20" />
 
   <node pkg="map_generator" name="random_forest" type="random_forest" output="screen">
     <param name="map/x_size" value="36" />
     <param name="map/y_size" value="20" />
     <param name="map/z_size" value="3" />
     <param name="map/resolution" value="0.1" />
-    <param name="map/obs_num" value="100" />
+    <param name="map/obs_num" value="80" />
     <param name="map/circle_num" value="0" />
 
     <param name="ObstacleShape/lower_rad" value="0.5" />
@@ -29,13 +30,15 @@
   </node>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="0" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="-20.0" />
     <arg name="init_y" value="-9.0" />
@@ -52,13 +55,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="1" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="-20.0" />
     <arg name="init_y" value="-7.0" />
@@ -75,13 +80,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="2" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="-20.0" />
     <arg name="init_y" value="-5.0" />
@@ -98,13 +105,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="3" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="-20.0" />
     <arg name="init_y" value="-3.0" />
@@ -121,13 +130,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="4" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="-20.0" />
     <arg name="init_y" value="-1.0" />
@@ -144,13 +155,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="5" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="-20.0" />
     <arg name="init_y" value="1.0" />
@@ -167,21 +180,23 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="6" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
-    <arg name="init_x" value="-20.0"/>
-    <arg name="init_y" value="3.0"/>
-    <arg name="init_z" value="1.0"/>
+    <arg name="init_x" value="-20.0" />
+    <arg name="init_y" value="3.0" />
+    <arg name="init_z" value="1.0" />
 
-    <arg name="target_x" value="20.0"/>
-    <arg name="target_y" value="-3.0"/>
-    <arg name="target_z" value="1"/>
+    <arg name="target_x" value="20.0" />
+    <arg name="target_y" value="-3.0" />
+    <arg name="target_z" value="1" />
 
     <arg name="map_size_x" value="$(arg map_size_x)" />
     <arg name="map_size_y" value="$(arg map_size_y)" />
@@ -190,21 +205,23 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="7" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
-    <arg name="init_x" value="-20.0"/>
-    <arg name="init_y" value="5.0"/>
-    <arg name="init_z" value="1.0"/>
+    <arg name="init_x" value="-20.0" />
+    <arg name="init_y" value="5.0" />
+    <arg name="init_z" value="1.0" />
 
-    <arg name="target_x" value="20.0"/>
-    <arg name="target_y" value="-5.0"/>
-    <arg name="target_z" value="1"/>
+    <arg name="target_x" value="20.0" />
+    <arg name="target_y" value="-5.0" />
+    <arg name="target_z" value="1" />
 
     <arg name="map_size_x" value="$(arg map_size_x)" />
     <arg name="map_size_y" value="$(arg map_size_y)" />
@@ -213,21 +230,23 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="8" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
-    <arg name="init_x" value="-20.0"/>
-    <arg name="init_y" value="7.0"/>
-    <arg name="init_z" value="1.0"/>
+    <arg name="init_x" value="-20.0" />
+    <arg name="init_y" value="7.0" />
+    <arg name="init_z" value="1.0" />
 
-    <arg name="target_x" value="20.0"/>
-    <arg name="target_y" value="-7.0"/>
-    <arg name="target_z" value="1"/>
+    <arg name="target_x" value="20.0" />
+    <arg name="target_y" value="-7.0" />
+    <arg name="target_z" value="1" />
 
     <arg name="map_size_x" value="$(arg map_size_x)" />
     <arg name="map_size_y" value="$(arg map_size_y)" />
@@ -236,21 +255,23 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="9" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
-    <arg name="init_x" value="-20.0"/>
-    <arg name="init_y" value="9.0"/>
-    <arg name="init_z" value="1.0"/>
+    <arg name="init_x" value="-20.0" />
+    <arg name="init_y" value="9.0" />
+    <arg name="init_z" value="1.0" />
 
-    <arg name="target_x" value="20.0"/>
-    <arg name="target_y" value="-9.0"/>
-    <arg name="target_z" value="1"/>
+    <arg name="target_x" value="20.0" />
+    <arg name="target_y" value="-9.0" />
+    <arg name="target_z" value="1" />
 
     <arg name="map_size_x" value="$(arg map_size_x)" />
     <arg name="map_size_y" value="$(arg map_size_y)" />
@@ -260,13 +281,15 @@
 
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="10" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="20.0" />
     <arg name="init_y" value="9.0" />
@@ -283,13 +306,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="11" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="20.0" />
     <arg name="init_y" value="7.0" />
@@ -306,13 +331,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="12" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="20.0" />
     <arg name="init_y" value="5.0" />
@@ -329,13 +356,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="13" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="20.0" />
     <arg name="init_y" value="3.0" />
@@ -352,13 +381,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="14" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="20.0" />
     <arg name="init_y" value="1.0" />
@@ -375,13 +406,15 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="15" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
     <arg name="init_x" value="20.0" />
     <arg name="init_y" value="-1.0" />
@@ -398,21 +431,23 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="16" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
-    <arg name="init_x" value="20.0"/>
-    <arg name="init_y" value="-3.0"/>
-    <arg name="init_z" value="1.0"/>
+    <arg name="init_x" value="20.0" />
+    <arg name="init_y" value="-3.0" />
+    <arg name="init_z" value="1.0" />
 
-    <arg name="target_x" value="-20.0"/>
-    <arg name="target_y" value="3.0"/>
-    <arg name="target_z" value="1"/>
+    <arg name="target_x" value="-20.0" />
+    <arg name="target_y" value="3.0" />
+    <arg name="target_z" value="1" />
 
     <arg name="map_size_x" value="$(arg map_size_x)" />
     <arg name="map_size_y" value="$(arg map_size_y)" />
@@ -421,21 +456,23 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="17" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
-    <arg name="init_x" value="20.0"/>
-    <arg name="init_y" value="-5.0"/>
-    <arg name="init_z" value="1.0"/>
+    <arg name="init_x" value="20.0" />
+    <arg name="init_y" value="-5.0" />
+    <arg name="init_z" value="1.0" />
 
-    <arg name="target_x" value="-20.0"/>
-    <arg name="target_y" value="5.0"/>
-    <arg name="target_z" value="1"/>
+    <arg name="target_x" value="-20.0" />
+    <arg name="target_y" value="5.0" />
+    <arg name="target_z" value="1" />
 
     <arg name="map_size_x" value="$(arg map_size_x)" />
     <arg name="map_size_y" value="$(arg map_size_y)" />
@@ -444,21 +481,23 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="18" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
-    <arg name="init_x" value="20.0"/>
-    <arg name="init_y" value="-7.0"/>
-    <arg name="init_z" value="1.0"/>
+    <arg name="init_x" value="20.0" />
+    <arg name="init_y" value="-7.0" />
+    <arg name="init_z" value="1.0" />
 
-    <arg name="target_x" value="-20.0"/>
-    <arg name="target_y" value="7.0"/>
-    <arg name="target_z" value="1"/>
+    <arg name="target_x" value="-20.0" />
+    <arg name="target_y" value="7.0" />
+    <arg name="target_z" value="1" />
 
     <arg name="map_size_x" value="$(arg map_size_x)" />
     <arg name="map_size_y" value="$(arg map_size_y)" />
@@ -467,21 +506,23 @@
   </include>
 
   <include file="$(find sfm_planner)/launch/run_in_sim_distributed.launch">
+    <arg name="agent_number" value="$(arg agent_number)" />
     <arg name="drone_id" value="19" />
     <arg name="cycle" value="true" />
     <arg name="waypoint_number" value="2" />
     <arg name="max_velocity" value="0.8" />
     <arg name="goal_weight" value="2.0" />
-    <arg name="obstacle_weight" value="10.1" />
+    <arg name="obstacle_weight" value="20.2" />
     <arg name="social_weight" value="2.1" />
+    <arg name="sigma_obstacle" value="0.2" />
 
-    <arg name="init_x" value="20.0"/>
-    <arg name="init_y" value="-9.0"/>
-    <arg name="init_z" value="1.0"/>
+    <arg name="init_x" value="20.0" />
+    <arg name="init_y" value="-9.0" />
+    <arg name="init_z" value="1.0" />
 
-    <arg name="target_x" value="-20.0"/>
-    <arg name="target_y" value="9.0"/>
-    <arg name="target_z" value="1"/>
+    <arg name="target_x" value="-20.0" />
+    <arg name="target_y" value="9.0" />
+    <arg name="target_z" value="1" />
 
     <arg name="map_size_x" value="$(arg map_size_x)" />
     <arg name="map_size_y" value="$(arg map_size_y)" />

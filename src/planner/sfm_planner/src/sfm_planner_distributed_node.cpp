@@ -3,6 +3,7 @@
 void SfmPlanner::init(ros::NodeHandle& nh)
 {
   nh_ = nh;
+  nh_.param("sfm/agent_number", agent_number_, -1);
   nh_.param("sfm/agent_id", agent_id_, -1);
 
   pos_cmd_pub_ =
@@ -11,8 +12,9 @@ void SfmPlanner::init(ros::NodeHandle& nh)
   point_cloud2_sub_ = nh_.subscribe<sensor_msgs::PointCloud2>(
       "/drone_" + std::to_string(agent_id_) + "_pcl_render_node/cloud", 1, &SfmPlanner::pointcloudCallback, this);
 
-  others_.resize(agent_id_);
-  for (int i = 0; i < agent_id_; i++)
+  others_.resize(agent_number_);
+  other_odoms_.resize(agent_number_);
+  for (int i = 0; i < agent_number_; i++)
   {
     // get higher priorty agents' positions
     ros::Subscriber odom_sub =
@@ -23,7 +25,7 @@ void SfmPlanner::init(ros::NodeHandle& nh)
 
   initAgent();
 
-  plan_timer_ = nh.createTimer(ros::Duration(0.1), &SfmPlanner::planCallback, this);
+  plan_timer_ = nh.createTimer(ros::Duration(0.05), &SfmPlanner::planCallback, this);
 }
 
 void SfmPlanner::initAgent()
@@ -42,6 +44,7 @@ void SfmPlanner::initAgent()
   agent_.velocity.set(0.0, 0.0);
   agent_.linearVelocity = 0.0;
   agent_.angularVelocity = 0.0;
+  agent_.radius = 0.4;
 
   // waypoints
   int waypoint_number;
@@ -65,37 +68,27 @@ void SfmPlanner::initAgent()
   nh_.param("sfm/agent_goal_weight", agent_.params.forceFactorDesired, 2.0);
   nh_.param("sfm/agent_obstacle_weight", agent_.params.forceFactorObstacle, 10.0);
   nh_.param("sfm/agent_social_weight", agent_.params.forceFactorSocial, 2.1);
-  // agent_.params.forceSigmaObstacle = 0.4;
+  nh_.param("sfm/agent_sigma_obstacle", agent_.params.forceSigmaObstacle, 0.2);
 
-  // group weights
-  // TODO
+  // group weights TODO
 
-  ROS_INFO("Agent %d, position: (%.2f, %.2f)", agent_id_, agent_.position.getX(), agent_.position.getY());
+  // agent info
+  // ROS_INFO("Agent %d, position: (%.2f, %.2f)", agent_id_, agent_.position.getX(), agent_.position.getY());
 
-  int j = 0;
-  for (auto waypoint : agent_.goals)
-  {
-    ROS_INFO("Agent %d, goal%d: (%.2f, %.2f)", agent_id_, j, waypoint.center.getX(), waypoint.center.getY());
-    j++;
-  }
+  // int j = 0;
+  // for (auto waypoint : agent_.goals)
+  // {
+  //   ROS_INFO("Agent %d, goal%d: (%.2f, %.2f)", agent_id_, j, waypoint.center.getX(), waypoint.center.getY());
+  //   j++;
+  // }
 }
 
 void SfmPlanner::odometryCallback(const nav_msgs::OdometryConstPtr& msg, int agent_id)
 {
-  sfm::Agent other;
-  other.id = agent_id;
-  other.position.set(msg->pose.pose.position.x, msg->pose.pose.position.y);
+  if (!odom_flag_)
+    odom_flag_ = true;
 
-  tf::Quaternion quat;
-  tf::quaternionMsgToTF(msg->pose.pose.orientation, quat);
-  double roll, pitch, yaw;
-  tf::Matrix3x3(quat).getRPY(roll, pitch, yaw);
-  other.yaw = utils::Angle::fromRadian(yaw);
-  other.radius = agent_.radius;
-  other.velocity.set(msg->twist.twist.linear.x, msg->twist.twist.linear.y);
-  other.linearVelocity = other.velocity.norm();
-  other.angularVelocity = msg->twist.twist.angular.z;
-  others_[agent_id] = other;
+  other_odoms_[agent_id] = *msg;
 }
 
 void SfmPlanner::pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg)
@@ -130,8 +123,8 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
   // update closest obstacle
   handleObstacles();
 
-  // update pedestrian around, handled in odomCallback
-  // handlePedestrians();
+  // update pedestrian around
+  handlePedestrians();
 
   // Compute Social Forces
   sfm::SFM.computeForces(agent_, others_);
@@ -162,6 +155,7 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
   cmd.yaw_dot = agent_.angularVelocity;
 
   pos_cmd_pub_.publish(cmd);
+
   // ros::Time b = ros::Time::now();
   // std::cout << (b - a).toNSec() << std::endl;
 }
@@ -198,19 +192,36 @@ void SfmPlanner::handleObstacles()
   agent_.obstacles1.push_back(ob);
 }
 
-// void SfmPlanner::handlePedestrians()
-// {
-//   others_.clear();
+void SfmPlanner::handlePedestrians()
+{
+  if (!odom_flag_)
+    return;
 
-//   for (int i = 0; i < agent_id_ - 1; i++)
-//   {
-//     /* code */
-//   }
-// }
+  for (int i = 0; i < other_odoms_.size(); i++)
+  {
+    if (i == agent_id_)
+      continue;
+
+    sfm::Agent other;
+    other.id = i;
+    other.position.set(other_odoms_[i].pose.pose.position.x, other_odoms_[i].pose.pose.position.y);
+
+    tf::Quaternion quat;
+    tf::quaternionMsgToTF(other_odoms_[i].pose.pose.orientation, quat);
+    double roll, pitch, yaw;
+    tf::Matrix3x3(quat).getRPY(roll, pitch, yaw);
+    other.yaw = utils::Angle::fromRadian(yaw);
+    other.radius = agent_.radius;
+    other.velocity.set(other_odoms_[i].twist.twist.linear.x, other_odoms_[i].twist.twist.linear.y);
+    other.linearVelocity = other.velocity.norm();
+    other.angularVelocity = other_odoms_[i].twist.twist.angular.z;
+    others_[i] = other;
+  }
+}
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "sfm_planner_single_node");
+  ros::init(argc, argv, "sfm_planner_distributed_node");
   ros::NodeHandle nh("~");
 
   SfmPlanner sfm_planner;
