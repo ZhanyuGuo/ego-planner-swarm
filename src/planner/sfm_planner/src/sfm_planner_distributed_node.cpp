@@ -44,7 +44,7 @@ void SfmPlanner::initAgent()
   agent_.velocity.set(0.0, 0.0);
   agent_.linearVelocity = 0.0;
   agent_.angularVelocity = 0.0;
-  agent_.radius = 0.4;
+  agent_.radius = 0.5;
 
   // waypoints
   int waypoint_number;
@@ -165,31 +165,47 @@ void SfmPlanner::handleObstacles()
   if (!point_cloud_flag_)
     return;
 
+  if (!odom_flag_)
+    return;
+
+  // TODO, improve to queue
+  if (agent_.obstacles1.size() > 500)
+    agent_.obstacles1.erase(agent_.obstacles1.begin());
+
   double x = agent_.position.getX();
   double y = agent_.position.getY();
   double z = 1.0;
 
-  double min_dist, min_x, min_y;
-  min_dist = std::hypot(x - point_cloud_.points[0].x, y - point_cloud_.points[0].y);
-  min_x = point_cloud_.points[0].x;
-  min_y = point_cloud_.points[0].y;
-
-  for (int j = 1; j < point_cloud_.points.size(); j++)
+  double min_x, min_y, min_dist = 1000.0;
+  for (int j = 0; j < point_cloud_.points.size(); j++)
   {
-    if (point_cloud_.points[j].z != z)
+    // only consider 2D plane
+    if (std::fabs(point_cloud_.points[j].z - z) < 0.1)
       continue;
 
-    double dist = std::hypot(x - point_cloud_.points[j].x, y - point_cloud_.points[j].y);
+    double x_j = point_cloud_.points[j].x;
+    double y_j = point_cloud_.points[j].y;
+    double dist = std::hypot(x - x_j, y - y_j);
     if (dist < min_dist)
     {
       min_dist = dist;
-      min_x = point_cloud_.points[j].x;
-      min_y = point_cloud_.points[j].y;
+      min_x = x_j;
+      min_y = y_j;
     }
   }
-  // std::cout << min_x << ", " << min_y << ": " << min_dist << std::endl;
   utils::Vector2d ob(min_x, min_y);
   agent_.obstacles1.push_back(ob);
+
+  // TODO, maybe agents seen as obstacles...
+  // agent_.obstacles2.clear();
+  // for (int i = 0; i < agent_number_; i++)
+  // {
+  //   if (i == agent_id_)
+  //     continue;
+
+  //   utils::Vector2d ag(other_odoms_[i].pose.pose.position.x, other_odoms_[i].pose.pose.position.y);
+  //   agent_.obstacles2.push_back(ag);
+  // }
 }
 
 void SfmPlanner::handlePedestrians()
@@ -197,12 +213,12 @@ void SfmPlanner::handlePedestrians()
   if (!odom_flag_)
     return;
 
-  for (int i = 0; i < other_odoms_.size(); i++)
+  for (int i = 0; i < agent_number_; i++)
   {
     if (i == agent_id_)
       continue;
 
-    sfm::Agent other;
+    sfm::Agent& other = others_[i];
     other.id = i;
     other.position.set(other_odoms_[i].pose.pose.position.x, other_odoms_[i].pose.pose.position.y);
 
@@ -215,7 +231,6 @@ void SfmPlanner::handlePedestrians()
     other.velocity.set(other_odoms_[i].twist.twist.linear.x, other_odoms_[i].twist.twist.linear.y);
     other.linearVelocity = other.velocity.norm();
     other.angularVelocity = other_odoms_[i].twist.twist.angular.z;
-    others_[i] = other;
   }
 }
 

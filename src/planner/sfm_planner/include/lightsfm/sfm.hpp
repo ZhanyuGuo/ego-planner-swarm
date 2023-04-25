@@ -267,6 +267,9 @@ inline void SocialForceModel::computeObstacleForce(Agent& agent, Map* map) const
   {
     agent.forces.obstacleForce.set(0, 0);
   }
+  // if (agent.id == 0)
+  //   std::cout << agent.obstacles1.size() << std::endl;
+  //   std::cout << agent.forces.obstacleForce << std::endl;
 }
 
 inline void SocialForceModel::computeSocialForce(unsigned index, std::vector<Agent>& agents) const
@@ -302,7 +305,6 @@ inline void SocialForceModel::computeSocialForce(unsigned index, std::vector<Age
 
 inline void SocialForceModel::computeSocialForce(Agent& me, std::vector<Agent>& agents) const
 {
-  // Agent& agent = agents[index];
   me.forces.socialForce.set(0, 0);
   for (unsigned i = 0; i < agents.size(); i++)
   {
@@ -318,17 +320,12 @@ inline void SocialForceModel::computeSocialForce(Agent& me, std::vector<Agent>& 
     utils::Vector2d interactionDirection = interactionVector / interactionLength;
     utils::Angle theta = interactionDirection.angleTo(diffDirection);
     double B = me.params.gamma * interactionLength;
-    double thetaRad = theta.toRadian();
+    double thetaRad = theta.toRadian() + B * 0.005;  // NOTE, rhs
     double forceVelocityAmount = -std::exp(-diff.norm() / B - PW(me.params.nPrime * B * thetaRad));
     double forceAngleAmount = -theta.sign() * std::exp(-diff.norm() / B - PW(me.params.n * B * thetaRad));
     utils::Vector2d forceVelocity = forceVelocityAmount * interactionDirection;
     utils::Vector2d forceAngle = forceAngleAmount * interactionDirection.leftNormalVector();
     me.forces.socialForce += me.params.forceFactorSocial * (forceVelocity + forceAngle);
-    // if (i == 0)
-    //{
-    //  agent.forces.robotSocialForce =
-    //      agent.params.forceFactorSocial * (forceVelocity + forceAngle);
-    //}
   }
 }
 
