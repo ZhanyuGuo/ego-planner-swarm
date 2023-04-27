@@ -37,7 +37,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -62,7 +62,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -87,7 +87,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -112,7 +112,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -137,7 +137,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -162,7 +162,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -187,7 +187,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -212,7 +212,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -237,7 +237,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -262,7 +262,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="-20.0" />
@@ -288,7 +288,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
@@ -313,7 +313,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
@@ -338,7 +338,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
@@ -363,7 +363,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
@@ -388,7 +388,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
@@ -413,7 +413,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
@@ -438,7 +438,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
@@ -463,7 +463,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
@@ -488,7 +488,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
@@ -513,7 +513,7 @@
     <arg name="max_velocity" value="0.9" />
     <arg name="goal_weight" value="2.0" />
     <arg name="obstacle_weight" value="20.1" />
-    <arg name="social_weight" value="2.1" />
+    <arg name="social_weight" value="4.2" />
     <arg name="sigma_obstacle" value="0.21" />
 
     <arg name="init_x" value="20.0" />
