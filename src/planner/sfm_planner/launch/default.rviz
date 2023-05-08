@@ -5,115 +5,68 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /simulation_map1/Autocompute Value Bounds1
-        - /drone01/Planning1
         - /drone01/Planning1/drone_path1
         - /drone01/Planning1/drone_path1/Offset1
-        - /drone01/Mapping1
         - /drone01/Mapping1/map inflate1
-        - /drone11/Planning1
-        - /drone11/Mapping1
         - /drone11/Mapping1/map inflate1
-        - /drone11/Simulation1
-        - /drone21/Planning1
         - /drone21/Planning1/drone_path1
-        - /drone21/Mapping1
         - /drone21/Mapping1/map inflate1
-        - /drone31/Planning1
         - /drone31/Planning1/drone_path1
-        - /drone31/Mapping1
         - /drone31/Mapping1/map inflate1
-        - /drone41/Planning1
         - /drone41/Planning1/optimal_traj1
         - /drone41/Planning1/drone_path1
-        - /drone41/Mapping1
         - /drone41/Mapping1/map inflate1
-        - /drone51/Planning1
         - /drone51/Planning1/drone_path1
-        - /drone51/Mapping1
         - /drone51/Mapping1/map inflate1
-        - /drone61/Planning1
         - /drone61/Planning1/drone_path1
-        - /drone61/Mapping1
         - /drone61/Mapping1/map inflate1
-        - /drone71/Planning1
         - /drone71/Planning1/InitTraj1
         - /drone71/Planning1/drone_path1
-        - /drone71/Mapping1
         - /drone71/Mapping1/map inflate1
-        - /drone71/Simulation1
         - /drone71/Simulation1/robot1
-        - /drone81/Planning1
         - /drone81/Planning1/drone_path1
-        - /drone81/Mapping1
         - /drone81/Mapping1/map inflate1
         - /drone81/Simulation1/robot1
-        - /drone91/Planning1
         - /drone91/Planning1/drone_path1
-        - /drone91/Mapping1
         - /drone91/Mapping1/map inflate1
-        - /drone91/Simulation1
         - /drone91/Simulation1/robot1
-        - /drone101/Planning1
         - /drone101/Planning1/optimal_traj1
         - /drone101/Planning1/drone_path1
-        - /drone101/Mapping1
         - /drone101/Mapping1/map inflate1
-        - /drone101/Simulation1
         - /drone101/Simulation1/robot1
-        - /drone111/Planning1
         - /drone111/Planning1/optimal_traj1
-        - /drone111/Mapping1
         - /drone111/Mapping1/map inflate1
-        - /drone111/Simulation1
         - /drone111/Simulation1/robot1
-        - /drone121/Planning1
         - /drone121/Planning1/optimal_traj1
         - /drone121/Planning1/drone_path1
-        - /drone121/Mapping1
         - /drone121/Mapping1/map inflate1
-        - /drone121/Simulation1
         - /drone121/Simulation1/robot1
-        - /drone131/Planning1
         - /drone131/Planning1/optimal_traj1
         - /drone131/Planning1/drone_path1
-        - /drone131/Mapping1
         - /drone131/Mapping1/map inflate1
         - /drone131/Simulation1/robot1
-        - /drone141/Planning1
         - /drone141/Planning1/drone_path1
         - /drone141/Simulation1/robot1
-        - /drone151/Planning1
         - /drone151/Planning1/optimal_traj1
         - /drone151/Planning1/drone_path1
-        - /drone151/Simulation1
         - /drone151/Simulation1/robot1
-        - /drone161/Planning1
         - /drone161/Planning1/optimal_traj1
         - /drone161/Planning1/drone_path1
-        - /drone161/Simulation1
         - /drone161/Simulation1/robot1
-        - /drone171/Planning1
         - /drone171/Planning1/optimal_traj1
         - /drone171/Planning1/drone_path1
-        - /drone171/Simulation1
         - /drone171/Simulation1/robot1
-        - /drone181/Planning1
         - /drone181/Planning1/optimal_traj1
         - /drone181/Planning1/drone_path1
-        - /drone181/Simulation1
         - /drone181/Simulation1/robot1
-        - /drone191/Planning1
         - /drone191/Planning1/goal_point1
         - /drone191/Planning1/optimal_traj1
         - /drone191/Planning1/drone_path1
-        - /drone191/Simulation1
         - /drone191/Simulation1/robot1
-        - /drone201/Planning1
         - /drone201/Planning1/drone_path1
-        - /drone201/Simulation1
         - /drone201/Simulation1/robot1
       Splitter Ratio: 0.43611112236976624
-    Tree Height: 441
+    Tree Height: 686
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -294,7 +247,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -422,7 +375,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -550,7 +503,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -678,7 +631,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -806,7 +759,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -934,7 +887,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -1062,7 +1015,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -1190,7 +1143,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -1318,7 +1271,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -1446,7 +1399,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -1574,7 +1527,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -1702,7 +1655,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -1830,7 +1783,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -1958,7 +1911,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -2086,7 +2039,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -2214,7 +2167,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -2342,7 +2295,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -2470,7 +2423,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -2598,7 +2551,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -2726,7 +2679,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:
@@ -2854,7 +2807,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Mapping
         - Class: rviz/Group
           Displays:

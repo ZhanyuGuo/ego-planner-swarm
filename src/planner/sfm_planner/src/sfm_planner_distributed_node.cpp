@@ -16,7 +16,7 @@ void SfmPlanner::init(ros::NodeHandle& nh)
   other_odoms_.resize(agent_number_);
   for (int i = 0; i < agent_number_; i++)
   {
-    // get higher priorty agents' positions
+    // get other agents' positions
     ros::Subscriber odom_sub =
         nh_.subscribe<nav_msgs::Odometry>("/drone_" + std::to_string(i) + "_visual_slam/odom", 1,
                                           boost::bind(&SfmPlanner::odometryCallback, this, _1, i));
@@ -25,7 +25,7 @@ void SfmPlanner::init(ros::NodeHandle& nh)
 
   initAgent();
 
-  plan_timer_ = nh.createTimer(ros::Duration(0.05), &SfmPlanner::planCallback, this);
+  plan_timer_ = nh.createTimer(ros::Duration(0.01), &SfmPlanner::planCallback, this);
 }
 
 void SfmPlanner::initAgent()
@@ -34,6 +34,9 @@ void SfmPlanner::initAgent()
 
   // cycle
   nh_.param("sfm/agent_cycle", agent_.cyclicGoals, false);
+
+  // queue size
+  nh_.param("sfm/queue_size", queue_size_, 500);
 
   // init position and velocity
   double init_x, init_y;
@@ -72,9 +75,8 @@ void SfmPlanner::initAgent()
 
   // group weights TODO
 
-  // agent info
+  // INFO
   // ROS_INFO("Agent %d, position: (%.2f, %.2f)", agent_id_, agent_.position.getX(), agent_.position.getY());
-
   // int j = 0;
   // for (auto waypoint : agent_.goals)
   // {
@@ -107,8 +109,6 @@ void SfmPlanner::pointcloudCallback(const sensor_msgs::PointCloud2ConstPtr& msg)
 
 void SfmPlanner::planCallback(const ros::TimerEvent& e)
 {
-  // ros::Time a = ros::Time::now();
-
   if (!plan_flag_)
   {
     last_time_ = ros::Time::now();
@@ -155,21 +155,15 @@ void SfmPlanner::planCallback(const ros::TimerEvent& e)
   cmd.yaw_dot = agent_.angularVelocity;
 
   pos_cmd_pub_.publish(cmd);
-
-  // ros::Time b = ros::Time::now();
-  // std::cout << (b - a).toNSec() << std::endl;
 }
 
 void SfmPlanner::handleObstacles()
 {
-  if (!point_cloud_flag_)
+  if (!point_cloud_flag_ || !odom_flag_)
     return;
 
-  if (!odom_flag_)
-    return;
-
-  // TODO, improve to queue
-  if (agent_.obstacles1.size() > 500)
+  // TODO, can be improved to queue
+  if (agent_.obstacles1.size() > queue_size_)
     agent_.obstacles1.erase(agent_.obstacles1.begin());
 
   double x = agent_.position.getX();

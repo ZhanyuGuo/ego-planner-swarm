@@ -37,6 +37,7 @@ public:
 private:
   bool plan_flag_, point_cloud_flag_, odom_flag_;
   int agent_number_, agent_id_;
+  int queue_size_;
   sfm::Agent agent_;
   std::vector<sfm::Agent> others_;
   std::vector<nav_msgs::Odometry> other_odoms_;

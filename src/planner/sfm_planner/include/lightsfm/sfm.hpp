@@ -320,9 +320,10 @@ inline void SocialForceModel::computeSocialForce(Agent& me, std::vector<Agent>& 
     utils::Vector2d interactionDirection = interactionVector / interactionLength;
     utils::Angle theta = interactionDirection.angleTo(diffDirection);
     double B = me.params.gamma * interactionLength;
-    double thetaRad = theta.toRadian() + B * 0.005;  // NOTE, rhs
-    double forceVelocityAmount = -std::exp(-diff.norm() / B - PW(me.params.nPrime * B * thetaRad));
-    double forceAngleAmount = -theta.sign() * std::exp(-diff.norm() / B - PW(me.params.n * B * thetaRad));
+    double distance = diff.norm() - me.radius - agents[i].radius;  // NOTE: add radius into consideration
+    double thetaRad = theta.toRadian() + B * 0.005;                // NOTE, rhs
+    double forceVelocityAmount = -std::exp(-distance / B - PW(me.params.nPrime * B * thetaRad));
+    double forceAngleAmount = -theta.sign() * std::exp(-distance / B - PW(me.params.n * B * thetaRad));
     utils::Vector2d forceVelocity = forceVelocityAmount * interactionDirection;
     utils::Vector2d forceAngle = forceAngleAmount * interactionDirection.leftNormalVector();
     me.forces.socialForce += me.params.forceFactorSocial * (forceVelocity + forceAngle);
