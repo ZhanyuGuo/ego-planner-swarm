@@ -236,9 +236,11 @@ void cmdCallback(const ros::TimerEvent &e)
 
   // NOTE: another msg sent to cmd_node to mavros
   raw_cmd.coordinate_frame = mavros_msgs::PositionTarget::FRAME_LOCAL_NED;
-  raw_cmd.type_mask = mavros_msgs::PositionTarget::IGNORE_AFX |
-                      mavros_msgs::PositionTarget::IGNORE_AFY |
-                      mavros_msgs::PositionTarget::IGNORE_AFZ;
+
+  raw_cmd.type_mask = 0;
+  // raw_cmd.type_mask = mavros_msgs::PositionTarget::IGNORE_AFX |
+  //                     mavros_msgs::PositionTarget::IGNORE_AFY |
+  //                     mavros_msgs::PositionTarget::IGNORE_AFZ;
 
   raw_cmd.position = cmd.position;
   raw_cmd.velocity = cmd.velocity;
