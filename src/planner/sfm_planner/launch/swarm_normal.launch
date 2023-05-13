@@ -26,7 +26,7 @@
     <!-- <param name="sensing/radius" value="5.0" /> -->
     <param name="sensing/rate" value="1.0" />
 
-    <param name="min_distance" value="1.2" />
+    <param name="min_distance" value="1.5" />
   </node>
 
   <include file="$(find sfm_planner)/launch/run_in_sim.launch">

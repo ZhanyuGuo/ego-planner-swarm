@@ -27,8 +27,7 @@
   <arg name="obj_num" value="10" />
 
   <!-- main algorithm params -->
-  <node pkg="sfm_planner" name="drone_$(arg drone_id)_sfm_planner_node"
-    type="sfm_planner_distributed_node" output="screen">
+  <node pkg="sfm_planner" name="drone_$(arg drone_id)_sfm_planner_node" type="sfm_planner_node" output="screen">
     <param name="sfm/agent_number" value="$(arg agent_number)" />
     <param name="sfm/agent_id" value="$(arg drone_id)" />
     <param name="sfm/agent_cycle" value="$(arg cycle)" />
