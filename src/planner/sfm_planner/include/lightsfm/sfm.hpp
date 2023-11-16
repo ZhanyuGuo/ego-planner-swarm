@@ -529,8 +529,10 @@ inline void SocialForceModel::computeForces(Agent& me, std::vector<Agent>& agent
   computeObstacleForce(me, map);
   computeSocialForce(me, agents);
   computeGroupForce(me, desiredDirection, agents, mygroup);
-  me.forces.globalForce =
-      me.forces.desiredForce + me.forces.socialForce + me.forces.obstacleForce + me.forces.groupForce;
+
+  // NOTE: try generating a smoother trajectory
+  me.forces.globalForce = 0.0 * me.forces.globalForce + 1.0 * (me.forces.desiredForce + me.forces.socialForce +
+                                                               me.forces.obstacleForce + me.forces.groupForce);
 }
 
 inline void Agent::move(double dt)
