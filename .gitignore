@@ -1,9 +1,7 @@
-.vscode/settings.json
+.vscode/
 .catkin_workspace
+.catkin_tools/
 build/
 devel/
-files/
+logs/
 src/CMakeLists.txt
-benchmark_haha.zip
-rebound_planner_BB.zip
-
